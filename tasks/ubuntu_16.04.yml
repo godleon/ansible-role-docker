@@ -1,0 +1,27 @@
+
+- name: Install prerequisite packages
+  apt:
+    name: '{{ item }}'
+    state: 'latest'
+    update_cache: 'yes'
+  with_items:
+    - 'apt-transport-https'
+    - 'ca-certificates'
+    - 'curl'
+  when: ansible_virtualization_type != 'docker'
+
+
+- name: Import GPG key
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+  when: ansible_virtualization_type != 'docker'
+
+
+- name: Add APT repository of Docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+    update_cache: yes
+  when: ansible_virtualization_type != 'docker'
+  
