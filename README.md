@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/godleon/ansible-role-docker.svg?branch=master)](https://travis-ci.org/godleon/ansible-role-docker)
+
+
 Role Name
 =========
 
