@@ -1,6 +1,6 @@
 galaxy_info:
   author: godleon
-  description: This role is used to install docker-ce and docker-compose in target server.
+  description: Install docker-ce and docker-compose
   company:
 
   # If the issue tracker for your role is not on github, uncomment the
