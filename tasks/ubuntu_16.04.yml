@@ -24,4 +24,43 @@
     state: present
     update_cache: yes
   when: ansible_virtualization_type != 'docker'
+
+
+- name: Install Docker CE
+  apt:
+    name: 'docker-ce'
+    state: 'latest'
+    update_cache: 'yes'
+  notify: restart docker.service
+  when: ansible_virtualization_type != 'docker'
+
+
+- name: Add specific users into Docker group
+  user:
+    name: '{{ item }}'
+    shell: /bin/bash
+    groups: docker
+    append: yes
+  with_items: '{{ docker_users }}'
+  when: ansible_virtualization_type != 'docker'
+
+
+- name: Install docker-compose
+  shell: 'curl -L "https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+  when: ansible_virtualization_type != 'docker'
+
+- name: Change docker-compose command to be executable
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: "a+x"
+
+#- name: Configure docker defaults
+#  copy:
+#    content: "DOCKER_OPTS=\"{{ docker_opts }}\""
+#    dest: /etc/default/docker
+#    owner: root
+#    group: root
+#    mode: 0744
+#  notify:
+#    - reload docker
   
