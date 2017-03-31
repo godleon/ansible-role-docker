@@ -53,6 +53,7 @@
   file:
     path: /usr/local/bin/docker-compose
     mode: "a+x"
+  when: ansible_virtualization_type != 'docker'
 
 #- name: Configure docker defaults
 #  copy:
