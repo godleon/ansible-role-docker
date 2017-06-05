@@ -1,9 +1,12 @@
 ---
 # defaults file for ansible-role-docker
 
-docker_users:
-  - user1
-  - user2
-  - user3
-
-docker_install_composer: 'true'
+docker:
+  users:
+    - user1
+    - user2
+    - user3
+  
+  compose:
+    install: 'true'
+    version: '1.13.0'
