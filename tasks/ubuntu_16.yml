@@ -37,7 +37,7 @@
     shell: /bin/bash
     groups: docker
     append: yes
-  with_items: '{{ docker_users }}'
+  with_items: '{{ docker.users }}'
   when: docker.users|length > 0
 
 
