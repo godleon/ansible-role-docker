@@ -1,0 +1,28 @@
+
+- name: install prerequisite packages
+  yum:
+    name: 'yum-utils'
+    state: latest
+
+- name: add repository for Docker CE
+  yum_repository:
+    name: docker-ce
+    description: docker community edition repository
+    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+
+
+- name: install docker-ce
+  yum:
+    name: 'docker-ce'
+    state: latest
+  notify: restart docker.service
+
+
+- name: Add specific users into Docker group
+  user:
+    name: '{{ item }}'
+    shell: /bin/bash
+    groups: docker
+    append: yes
+  with_items: '{{ docker_users }}'
+  when: docker_users|length > 0

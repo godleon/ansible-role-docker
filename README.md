@@ -21,6 +21,7 @@ The variables that should be passed to this role and a brief description about t
 
 ```yaml
 # Specify the users who can use docker commands without sudo
+# You can keep it empty for root-only permission
 docker_users:
   - user1
   - user2

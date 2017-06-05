@@ -6,3 +6,4 @@ docker_users:
   - user2
   - user3
 
+docker_install_composer: 'true'

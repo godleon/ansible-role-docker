@@ -8,14 +8,12 @@
     - 'apt-transport-https'
     - 'ca-certificates'
     - 'curl'
-  when: ansible_virtualization_type != 'docker'
 
 
 - name: Import GPG key
   apt_key:
     url: "https://download.docker.com/linux/ubuntu/gpg"
     state: present
-  when: ansible_virtualization_type != 'docker'
 
 
 - name: Add APT repository of Docker
@@ -23,7 +21,6 @@
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
     state: present
     update_cache: yes
-  when: ansible_virtualization_type != 'docker'
 
 
 - name: Install Docker CE
@@ -32,7 +29,6 @@
     state: 'latest'
     update_cache: 'yes'
   notify: restart docker.service
-  when: ansible_virtualization_type != 'docker'
 
 
 - name: Add specific users into Docker group
@@ -42,15 +38,8 @@
     groups: docker
     append: yes
   with_items: '{{ docker_users }}'
-  when: ansible_virtualization_type != 'docker'
+  when: docker_users|length > 0
 
-
-- name: Install docker-compose
-  get_url:
-    url: 'https://github.com/docker/compose/releases/download/1.11.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}'
-    dest: /usr/local/bin/docker-compose
-    mode: "a+x"
-  when: ansible_virtualization_type != 'docker'
 
 # - name: Change docker-compose command to be executable
 #   file:
