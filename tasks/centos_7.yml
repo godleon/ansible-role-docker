@@ -5,11 +5,9 @@
     state: latest
 
 - name: add repository for Docker CE
-  yum_repository:
-    name: docker-ce
-    description: docker community edition repository
-    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
-
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
 
 - name: install docker-ce
   yum:
