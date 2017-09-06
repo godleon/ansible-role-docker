@@ -8,6 +8,8 @@
     - 'apt-transport-https'
     - 'ca-certificates'
     - 'curl'
+    - 'software-properties-common'
+    - 'jq'
 
 
 - name: Import GPG key

@@ -9,4 +9,3 @@ docker:
   
   compose:
     install: 'true'
-    version: '1.13.0'

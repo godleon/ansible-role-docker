@@ -5,9 +5,14 @@
 - include: '{{ ansible_distribution | lower }}_{{ ansible_distribution_major_version }}.yml'
   
 
+- name: Get latest version number of docker-compose
+  shell: "curl https://api.github.com/repos/docker/compose/releases/latest -s | jq .name -r"
+  register: result
+  when: docker.compose.install
+
 - name: Install docker-compose
   get_url:
-    url: "https://github.com/docker/compose/releases/download/{{ docker.compose.version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    url: "https://github.com/docker/compose/releases/download/{{ result.stdout }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
     dest: /usr/local/bin/docker-compose
     mode: "a+x"
   when: ansible_virtualization_type != 'docker' and docker.compose.install

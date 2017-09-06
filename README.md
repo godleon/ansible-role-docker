@@ -22,10 +22,19 @@ The variables that should be passed to this role and a brief description about t
 ```yaml
 # Specify the users who can use docker commands without sudo
 # You can keep it empty for root-only permission
-docker_users:
-  - user1
-  - user2
-  - user3
+docker:
+  users:
+    - user1
+    - user2
+    - user3
+```
+
+And this role will install the latest version of [Docker Compose](https://docs.docker.com/compose/overview/) by default, if you don't want Docker Compose be installed, you need to configure the variables as follows:
+
+```yaml
+docker:
+  compose:
+    install: 'false'
 ```
 
 Dependencies
