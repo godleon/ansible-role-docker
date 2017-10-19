@@ -15,4 +15,4 @@
     url: "https://github.com/docker/compose/releases/download/{{ result.stdout }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
     dest: /usr/local/bin/docker-compose
     mode: "a+x"
-  when: ansible_virtualization_type != 'docker' and docker.compose.install
+  when: ansible_virtualization_type != 'docker' and docker.compose.install == 'true'

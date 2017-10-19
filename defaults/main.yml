@@ -8,4 +8,4 @@ docker:
     - user3
   
   compose:
-    install: 'true'
+    install: 'false'
