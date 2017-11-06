@@ -2,7 +2,7 @@
 # tasks file for ansible-role-docker
 
 
-- include: '{{ ansible_distribution | lower }}_{{ ansible_distribution_major_version }}.yml'
+- import_tasks: '{{ ansible_distribution | lower }}_{{ ansible_distribution_major_version }}.yml'
   
 
 - name: Get latest version number of docker-compose
@@ -15,4 +15,4 @@
     url: "https://github.com/docker/compose/releases/download/{{ result.stdout }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
     dest: /usr/local/bin/docker-compose
     mode: "a+x"
-  when: ansible_virtualization_type != 'docker' and docker.compose.install == 'true'
+  when: ansible_virtualization_type != 'docker' and docker.compose.install

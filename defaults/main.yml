@@ -3,9 +3,7 @@
 
 docker:
   users:
-    - user1
-    - user2
-    - user3
+    - ubuntu
   
   compose:
-    install: 'false'
+    install: true
