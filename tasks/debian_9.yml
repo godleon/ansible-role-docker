@@ -12,6 +12,7 @@
     - 'gnupg2'
     - 'software-properties-common'
     - 'jq'
+  ignore_errors: yes
 
 - name: "Import GPG key"
   apt_key:

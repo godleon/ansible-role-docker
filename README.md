@@ -20,19 +20,19 @@ Role Variables
 The variables that should be passed to this role and a brief description about them are as follows:
 
 ```yaml
-# Specify the users(default is 'ubuntu') who can use docker commands without sudo
+# Specify the users(default is the user id you are using for doing ansible provision) who can use docker commands without sudo
 # You can keep it empty for root-only permission
 docker:
   users:
     - ubuntu
 ```
 
-And this role will install the latest version of [Docker Compose](https://docs.docker.com/compose/overview/) by default, if you don't want Docker Compose be installed, you need to configure the variables as follows:
+And this role can also install the latest version of [Docker Compose](https://docs.docker.com/compose/overview/), if you want latest Docker Compose to be installed, you need to configure the variables as follows:
 
 ```yaml
 docker:
   compose:
-    install: false
+    install: true
 ```
 
 Dependencies
