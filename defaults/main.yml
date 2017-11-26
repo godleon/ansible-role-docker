@@ -3,7 +3,7 @@
 
 docker:
   users:
-    - ubuntu
+    - "{{ ansible_user_id }}"
   
   compose:
-    install: true
+    install: false

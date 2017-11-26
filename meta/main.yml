@@ -135,7 +135,7 @@ galaxy_info:
   #  - wily
     - xenial
   #  - yakkety
-  #- name: Debian
+  - name: Debian
   #  versions:
   #  - all
   #  - etch
@@ -143,7 +143,7 @@ galaxy_info:
   #  - lenny
   #  - sid
   #  - squeeze
-  #  - stretch
+    - stretch
   #  - wheezy
   #- name: Alpine
   #  versions:

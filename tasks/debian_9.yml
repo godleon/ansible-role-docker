@@ -1,0 +1,32 @@
+---
+
+- name: "Install prerequisite packages"
+  apt:
+    name: '{{ item }}'
+    state: 'latest'
+    update_cache: 'yes'
+  with_items:
+    - 'apt-transport-https'
+    - 'ca-certificates'
+    - 'curl'
+    - 'gnupg2'
+    - 'software-properties-common'
+    - 'jq'
+
+- name: "Import GPG key"
+  apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
+    state: present
+
+- name: "Add APT repository of Docker"
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    state: present
+    update_cache: yes
+
+- name: "Install Docker CE"
+  apt:
+    name: 'docker-ce'
+    state: 'latest'
+    update_cache: 'yes'
+  notify: restart docker.service
