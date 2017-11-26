@@ -24,10 +24,11 @@
     repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
     state: present
     update_cache: yes
+  ignore_errors: yes
 
 - name: "Install Docker CE"
   apt:
     name: 'docker-ce'
     state: 'latest'
-    update_cache: 'yes'
+    # update_cache: 'yes'
   notify: restart docker.service
