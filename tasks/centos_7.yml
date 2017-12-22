@@ -23,4 +23,5 @@
     groups: docker
     append: yes
   with_items: '{{ docker.users }}'
-  when: docker.users|length > 0
+  when:
+  - docker.users is defined
