@@ -1,6 +1,22 @@
 ---
 
-- name: Install prerequisite packages
+- debug:
+    msg: "Starting to install docker in Ubuntu 14.04 (Trusty) ......."
+
+- name: "Get kernel version"
+  shell: "uname -r"
+  register: kernel_ver
+
+- name: "Install prerequisite packages for allowing docker to use aufs storage"
+  apt:
+    name: '{{ item }}'
+    state: 'latest'
+    update_cache: 'yes'
+  with_items:
+    - "linux-image-extra-{{ kernel_ver.stdout }}"
+    - 'linux-image-extra-virtual'
+
+- name: "Install prerequisite packages"
   apt:
     name: '{{ item }}'
     state: 'latest'
@@ -12,12 +28,10 @@
     - 'software-properties-common'
     - 'jq'
 
-
 - name: "Import GPG key"
   apt_key:
     url: "https://download.docker.com/linux/ubuntu/gpg"
     state: present
-
 
 - name: "Add APT repository of Docker"
   apt_repository:
@@ -25,16 +39,14 @@
     state: present
     update_cache: yes
 
-
-- name: Install Docker CE
+- name: "Install Docker CE"
   apt:
     name: 'docker-ce'
     state: 'latest'
     update_cache: 'yes'
   notify: restart docker.service
 
-
-- name: Add specific users into Docker group
+- name: "Add specific users into Docker group"
   user:
     name: '{{ item }}'
     shell: /bin/bash
@@ -43,3 +55,4 @@
   with_items: '{{ docker.users }}'
   when:
   - docker.users is defined
+  
