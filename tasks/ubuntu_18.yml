@@ -1,18 +1,18 @@
 ---
 
-- name: Install prerequisite packages
-  apt:
-    name: '{{ item }}'
-    state: 'latest'
-    update_cache: 'yes'
-  with_items:
-    - 'apt-transport-https'
-    - 'ca-certificates'
-    - 'curl'
-    - 'software-properties-common'
-    - 'jq'
+# - name: "Install prerequisite packages"
+#   apt:
+#     name: '{{ item }}'
+#     state: 'latest'
+#     update_cache: 'yes'
+#   with_items:
+#     - 'apt-transport-https'
+#     - 'ca-certificates'
+#     - 'curl'
+#     - 'software-properties-common'
+#     - 'jq'
 
-- name: Install Docker CE
+- name: "Install Docker"
   apt:
     name: 'docker.io'
     state: 'latest'
@@ -20,7 +20,7 @@
   notify: restart docker.service
 
 
-- name: Add specific users into Docker group
+- name: "Add specific users into Docker group"
   user:
     name: '{{ item }}'
     shell: /bin/bash
