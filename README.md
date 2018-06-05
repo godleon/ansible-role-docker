@@ -20,9 +20,12 @@ Role Variables
 The variables that should be passed to this role and a brief description about them are as follows:
 
 ```yaml
-# Specify the users(default is the user id you are using for doing ansible provision) who can use docker commands without sudo
-# You can keep it empty for root-only permission
+
 docker:
+  # Specify the docker version(e.g. 17.03.2~ce-0~ubuntu-xenial). Ignore it if you want to install the latest version.
+  version: "latest"
+  # Specify the users(default is the user id you are using for doing ansible provision) who can use docker commands without sudo
+  # You can keep it empty for root-only permission
   users:
     - ubuntu
 ```

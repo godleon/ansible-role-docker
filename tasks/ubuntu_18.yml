@@ -12,12 +12,21 @@
 #     - 'software-properties-common'
 #     - 'jq'
 
-- name: "Install Docker"
+- name: "Install docker.io"
   apt:
     name: 'docker.io'
     state: 'latest'
     update_cache: 'yes'
   notify: restart docker.service
+  when: docker.version == "latest"
+
+- name: "Install docker.io (user-specified version)"
+  apt:
+    name: 'docker.io={{ docker.version }}'
+    state: 'present'
+    update_cache: 'yes'
+  notify: restart docker.service
+  when: docker.version != "latest"
 
 
 - name: "Add specific users into Docker group"

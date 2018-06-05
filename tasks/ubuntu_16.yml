@@ -26,12 +26,21 @@
     update_cache: yes
 
 
-- name: Install Docker CE
+- name: "Install Docker CE"
   apt:
     name: 'docker-ce'
     state: 'latest'
     update_cache: 'yes'
   notify: restart docker.service
+  when: docker.version == "latest"
+
+- name: "Install Docker CE (user-specified version)"
+  apt:
+    name: 'docker-ce={{ docker.version }}'
+    state: 'present'
+    update_cache: 'yes'
+  notify: restart docker.service
+  when: docker.version != "latest"
 
 
 - name: Add specific users into Docker group
