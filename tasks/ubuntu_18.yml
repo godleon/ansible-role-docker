@@ -1,35 +1,49 @@
 ---
 
-# - name: "Install prerequisite packages"
-#   apt:
-#     name: '{{ item }}'
-#     state: 'latest'
-#     update_cache: 'yes'
-#   with_items:
-#     - 'apt-transport-https'
-#     - 'ca-certificates'
-#     - 'curl'
-#     - 'software-properties-common'
-#     - 'jq'
-
-- name: "Install docker.io"
+- name: Install prerequisite packages
   apt:
-    name: 'docker.io'
+    name: '{{ item }}'
+    state: 'latest'
+    update_cache: 'yes'
+  with_items:
+    - 'apt-transport-https'
+    - 'ca-certificates'
+    - 'curl'
+    - 'software-properties-common'
+    - 'jq'
+
+
+- name: "Import GPG key"
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+
+- name: "Add APT repository of Docker"
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+    update_cache: yes
+
+
+- name: "Install Docker CE"
+  apt:
+    name: 'docker-ce'
     state: 'latest'
     update_cache: 'yes'
   notify: restart docker.service
   when: docker.version == "latest"
 
-- name: "Install docker.io (user-specified version)"
+- name: "Install Docker CE (user-specified version)"
   apt:
-    name: 'docker.io={{ docker.version }}'
+    name: 'docker-ce={{ docker.version }}'
     state: 'present'
     update_cache: 'yes'
   notify: restart docker.service
   when: docker.version != "latest"
 
 
-- name: "Add specific users into Docker group"
+- name: Add specific users into Docker group
   user:
     name: '{{ item }}'
     shell: /bin/bash
