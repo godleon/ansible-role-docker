@@ -34,12 +34,18 @@
   notify: restart docker.service
   when: docker.version == "latest"
 
+
 - name: "Install Docker CE (user-specified version)"
-  apt:
-    name: 'docker-ce={{ docker.version }}'
-    state: 'present'
-    update_cache: 'yes'
-  notify: restart docker.service
+  block:
+  - name: "Get accurate version name of docker"
+    shell: "apt-cache policy docker-ce | grep {{ docker.version }} | head -n1 | awk '{print $1}'"
+    register: docker_version
+  
+  - apt:
+      name: 'docker-ce={{ docker_version.stdout }}'
+      state: 'present'
+      update_cache: 'yes'
+    notify: restart docker.service
   when: docker.version != "latest"
 
 
