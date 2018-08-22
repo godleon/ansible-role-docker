@@ -51,7 +51,7 @@
 - name: "Install Docker CE (user-specified version)"
   block:
   - name: "Get accurate version name of docker"
-    shell: "apt-cache policy docker-ce | grep {{ docker.version }} | head -n1 | awk '{print $1}'"
+    shell: "apt-cache policy docker-ce | grep {{ docker.version }} | replace('*', '') | head -n1 | awk '{print $1}'"
     register: docker_version
     failed_when: docker_version.stdout == ""
   
