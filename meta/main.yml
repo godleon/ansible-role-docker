@@ -1,7 +1,7 @@
 galaxy_info:
   author: godleon
   description: Install docker-ce and docker-compose
-  company:
+  company: QCT
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -134,6 +134,7 @@ galaxy_info:
   #  - vivid
   #  - wily
     - xenial
+    - bionic
   #  - yakkety
   - name: Debian
     versions:
