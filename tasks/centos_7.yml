@@ -1,3 +1,4 @@
+---
 
 - name: install prerequisite packages
   yum:
@@ -14,7 +15,6 @@
     name: 'docker-ce'
     state: latest
   notify: restart docker.service
-
 
 - name: Add specific users into Docker group
   user:
