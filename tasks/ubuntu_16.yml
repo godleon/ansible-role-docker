@@ -26,6 +26,22 @@
     update_cache: yes
 
 
+- name: "Add Registry Mirror configuration"
+  block:
+  - name: "Create folder for keeping docker daemon configurations"
+    file:
+      path: "/etc/docker"
+      state: "directory"
+
+  - name: "Put configurations into remote folder"
+    template:
+      src: "templates/daemon.json"
+      dest: "/etc/docker/daemon.json"
+  when:
+  - docker.registry_mirror is defined
+  - docker.registry_mirror != ""
+
+
 - name: "Install Docker CE"
   apt:
     name: 'docker-ce'
