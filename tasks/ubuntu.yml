@@ -1,6 +1,25 @@
 ---
 
-- name: Install prerequisite packages
+- debug:
+    msg: "Starting to install docker in Ubuntu 14.04 (Trusty) ......."
+
+- name: "Get kernel version"
+  shell: "uname -r"
+  register: kernel_ver
+
+
+- name: "Install prerequisite packages for allowing docker to use aufs storage(Only for 14.04)"
+  apt:
+    name: '{{ item }}'
+    state: 'latest'
+    update_cache: 'yes'
+  with_items:
+    - "linux-image-extra-{{ kernel_ver.stdout }}"
+    - 'linux-image-extra-virtual'
+  when: ansible_distribution_major_version == "14"
+
+
+- name: "Install prerequisite packages"
   apt:
     name: '{{ item }}'
     state: 'latest'
@@ -25,7 +44,7 @@
     state: present
     update_cache: yes
 
-    
+
 - name: "Add Registry Mirror configuration"
   block:
   - name: "Create folder for keeping docker daemon configurations"
@@ -66,7 +85,7 @@
   when: docker.version != "latest"
 
 
-- name: Add specific users into Docker group
+- name: "Add specific users into Docker group"
   user:
     name: '{{ item }}'
     shell: /bin/bash
@@ -75,3 +94,4 @@
   with_items: '{{ docker.users }}'
   when:
   - docker.users is defined
+  
