@@ -2,7 +2,15 @@
 
 - name: install prerequisite packages
   yum:
-    name: 'yum-utils'
+    name: "{{ item }}"
+    state: latest
+  loop:
+  - "yum-utils"
+  - "epel-release"
+
+- name: "Install jq"
+  yum:
+    name: "jq"
     state: latest
 
 
