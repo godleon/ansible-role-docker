@@ -81,7 +81,6 @@
       name: 'docker-ce={{ docker_version.stdout }}'
       state: 'present'
       update_cache: 'yes'
-    notify: restart docker.service
   when: docker.version != "latest"
 
 

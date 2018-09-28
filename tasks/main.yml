@@ -4,6 +4,11 @@
 # - include_tasks: '{{ ansible_distribution | lower }}_{{ ansible_distribution_major_version }}.yml'
 - include_tasks: '{{ ansible_distribution | lower }}.yml'
   
+- name: "Start docker.service"
+  service: 
+    name: "docker"
+    state: started
+
 
 - name: Get latest version number of docker-compose
   shell: "curl https://api.github.com/repos/docker/compose/releases/latest -s | jq .name -r"
