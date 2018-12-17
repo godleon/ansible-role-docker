@@ -36,6 +36,7 @@ And this role can also install the latest version of [Docker Compose](https://do
 docker:
   compose:
     install: true
+  registry_mirror: "YOUR_REGISTRY_PROXY_URL"
 ```
 
 Dependencies
