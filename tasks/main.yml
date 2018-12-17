@@ -7,7 +7,10 @@
 - name: "Restart docker.service"
   service: 
     name: "docker"
-    state: "restarted"
+    state: "{{ item }}"
+  loop:
+  - "started"
+  - "restarted"
 
 
 - name: Get latest version number of docker-compose
