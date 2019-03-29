@@ -49,6 +49,6 @@
     shell: /bin/bash
     groups: docker
     append: yes
-  with_items: '{{ docker.users }}'
+  loop: '{{ docker.users }}'
   when:
   - docker.users is defined

@@ -7,13 +7,20 @@
   shell: "uname -r"
   register: kernel_ver
 
+- name: "Make sure no APT process is running"
+  shell: "ps aux | grep apt | grep 'dpkg-deb' | grep -v grep | wc -l"
+  register: apt_pid_num
+  until: apt_pid_num.stdout == "0"
+  retries: 90
+  delay: 10
+
 
 - name: "Install prerequisite packages for allowing docker to use aufs storage(Only for 14.04)"
   apt:
     name: '{{ item }}'
     state: 'latest'
     update_cache: 'yes'
-  with_items:
+  loop:
     - "linux-image-extra-{{ kernel_ver.stdout }}"
     - 'linux-image-extra-virtual'
   when: ansible_distribution_major_version == "14"
@@ -24,7 +31,7 @@
     name: '{{ item }}'
     state: 'latest'
     update_cache: 'yes'
-  with_items:
+  loop:
     - 'apt-transport-https'
     - 'ca-certificates'
     - 'curl'
@@ -90,7 +97,7 @@
     shell: /bin/bash
     groups: docker
     append: yes
-  with_items: '{{ docker.users }}'
+  loop: '{{ docker.users }}'
   when:
   - docker.users is defined
   
